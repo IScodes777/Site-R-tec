@@ -7,15 +7,27 @@ body {
     padding: 0;
 }
 
-img {
-    max-width: 30%;
+.logo {
+    max-width: 12%;
     height: auto;
     border-radius: 70px;
     border: 2px solid #fff;
     margin-top: 20px;
 }
 
+.icon {
+    width: 45px;
+    height: 45px;
+    margin: 10px;
+    border-radius: 100%;
+    transition: transform 0.3s ease;
+    margin-right: 400px;
+}
+
 .links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 30px;
 }
 
@@ -26,5 +38,6 @@ img {
     padding: 15px;
     width: 80%; 
     color: #fff;
-    font-size: 18px;
+    font-size: 22px;
+    align-items: center;
 }
