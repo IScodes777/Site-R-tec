@@ -69,57 +69,90 @@ main input[type="text"] {
 }
 
 .row {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; 
-    background-color: #f9f9f9;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
-    margin: 20px;
-    cursor: pointer;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
 }
 
-.row ::after {
-    content: "";
-    flex: auto;
-    background: transparent;
+.column.card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    border: 1px solid #e2e8f0 !important; /* Sobrescreve o inline antigo */
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
-.column {
-    flex: 1;
-    min-width: 250px; 
-    max-width: 300px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+.column.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
-/* Ajuste para as imagens não passarem do limite do card */
-.column img {
-    border-radius: 5px;
-    width: 50%;
+/* Imagem do Card de Produto */
+.column.card img {
+    border-radius: 6px;
+    width: 100% !important;
+    height: 200px !important;
     object-fit: cover;
+    margin-bottom: 12px;
+}
+
+/* Conteúdo de Texto do Card */
+.column.card h3 {
+    margin: 0 0 8px 0;
+    color: #1e293b;
+    font-size: 16px;
+}
+
+.column.card p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.column.card .preco {
+    margin-top: auto;
+    padding-top: 10px;
+    font-size: 16px;
+    color: #059669;
+    font-weight: bold;
 }
 
 .modal {
-  display: none; /* escondido por padrão */
-  position: fixed;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
+    display: none; /* escondido por padrão */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6); /* Backdrop moderno fosco */
+    backdrop-filter: blur(4px); /* Suave desfoque ao fundo */
 }
 
 .modal-content {
-  background: #fff;
-  margin: 10% auto;
-  padding: 20px;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 8px;
-  font-family: roboto, sans-serif;
+    background: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    font-family: roboto, sans-serif;
+}
+
+.modal-preco{
+    color: yellowgreen;
+}
+
+.modal-content p{
+    font-family: cursive;
+    font-size: 24px;
 }
 
 .close {
@@ -136,8 +169,7 @@ main input[type="text"] {
 
 .contato {
     margin-top: 20px;
-    font-size: 14px;
-    background-color: #3b38383b;
+    font-size: 26px;
     padding: 10px;
     border-radius: 5px;
     justify-content: left 20px;
