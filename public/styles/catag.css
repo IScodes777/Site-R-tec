@@ -19,40 +19,54 @@ main {
     margin: 20px; 
 }
 
-/* Container para alinhar input e botão de busca */
+/* ==========================================================
+   AJUSTE DOS BOTÕES E INPUT DO MAIN (BUSCA)
+   ========================================================== */
 .busca-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
+    align-items: stretch; /* Força o input e o botão a terem exatamente a mesma altura */
+    max-width: 500px;     /* Limita o tamanho máximo da barra no desktop */
+    margin: 20px auto 0 auto; /* Centraliza o bloco na tela */
+    gap: 0;               /* Remove o espaço para eles se unirem elegantemente */
 }
 
-/* Estilização para o campo de pesquisa dentro do main */
 main input[type="text"] {
-    font-size: 20px;
-    padding: 10px 20px;
-    width: 60%;
+    font-size: 16px;
+    padding: 12px 20px;
     background-color: #1a1a1a;
     color: #ffffff;
-    max-width: 400px;
-    border-radius: 25px;
-    outline: none;
     border: 2px solid #9e1a08;
+    border-right: none; /* Remove a borda direita para colar no botão */
+    border-radius: 25px 0 0 25px; /* Arredonda apenas os cantos esquerdos */
+    outline: none;
+    flex-grow: 1; /* Faz o input ocupar o máximo de espaço disponível */
     box-sizing: border-box;
 }
 
 #botao-buscar {
-    font-size: 20px;
-    padding: 10px 20px;
+    font-size: 16px;
+    padding: 12px 24px;
     background-color: #9e1a08;
     color: #ffffff;
-    border: none;
-    border-radius: 25px;
+    border: 2px solid #9e1a08;
+    border-radius: 0 25px 25px 0; /* Arredonda apenas os cantos direitos */
     cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
+#botao-buscar:hover {
+    background-color: #bd210b;
+    border-color: #bd210b;
+}
+
+/* ==========================================================
+   CATEGORIAS E CONTEÚDO
+   ========================================================== */
 .categorias {
     padding: 20px; 
     display: flex;
@@ -76,7 +90,6 @@ main input[type="text"] {
     font-size: 18px; 
 }
 
-/* Efeito ao passar o mouse por cima dos botões de categorias */
 .categorias button:hover {
     background-color: #9e1a08; 
     color: #ffffff;
@@ -94,7 +107,7 @@ main input[type="text"] {
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; /* Adicionado padding lateral para os cards não colarem na tela do celular */
+    padding: 0 20px; 
     box-sizing: border-box;
 }
 
@@ -115,7 +128,6 @@ main input[type="text"] {
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
-/* Imagem do Card de Produto */
 .column.card img {
     border-radius: 6px;
     width: 100% ;
@@ -124,7 +136,6 @@ main input[type="text"] {
     margin-bottom: 12px;
 }
 
-/* Conteúdo de Texto do Card */
 .column.card h3 {
     margin: 0 0 8px 0;
     color: #1e293b;
@@ -155,7 +166,7 @@ main input[type="text"] {
     height: 100%;
     background-color: rgba(15, 23, 42, 0.6); 
     backdrop-filter: blur(4px); 
-    overflow-y: auto; /* Permite rolar o modal caso o conteúdo seja grande no celular */
+    overflow-y: auto; 
 }
 
 .modal-content {
@@ -185,7 +196,7 @@ main input[type="text"] {
     cursor: pointer;
     width: 30px;
     height: 30px;
-    line-height: 28px; /* Alinha o X verticalmente */
+    line-height: 28px; 
     background-color:  #9e1a08;
     color: #ffffff;
     border-radius: 50%;
@@ -216,35 +227,40 @@ main input[type="text"] {
    ========================================================== */
 @media (max-width: 600px) {
     main {
-        padding: 30px 15px; /* Reduz o padding gigante para caber na tela */
+        padding: 30px 15px; 
         margin: 10px;
-        font-size: 18px; /* Diminui o texto do título principal */
+        font-size: 18px; 
     }
 
-    main input[type="text"] {
-        width: 100%; /* Input ocupa largura total disponível */
-        font-size: 16px;
+    /* Ajuste fino para a barra de busca não quebrar no celular */
+    .busca-container {
+        width: 100%;
         max-width: none;
     }
 
+    main input[type="text"] {
+        font-size: 15px;
+        padding: 10px 15px;
+    }
+
     #botao-buscar {
-        width: 100%; /* Botão fica embaixo do input e também ocupa largura total */
-        font-size: 16px;
+        font-size: 15px;
+        padding: 10px 18px;
     }
 
     .categorias {
-        gap: 8px; /* Diminui o espaçamento entre botões de categoria */
+        gap: 8px; 
         padding: 10px;
     }
 
     .categorias button {
-        padding: 10px 16px; /* Botões ligeiramente menores para o dedo tocar */
-        font-size: 15px;
-        flex-grow: 1; /* Faz os botões se ajustarem melhor na largura */
+        padding: 10px 16px; 
+        font-size: 14px;
+        flex-grow: 1; 
     }
 
     .row {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Permite 2 cards por linha em telas muito pequenas, se couber */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
         gap: 12px;
         padding: 0 10px;
     }
@@ -254,16 +270,16 @@ main input[type="text"] {
     }
 
     .column.card img {
-        height: 150px !important; /* Imagens um pouco menores nos cards */
+        height: 150px !important; 
     }
 
     .modal-content {
-        margin: 20% auto; /* Centraliza melhor o modal na tela do celular */
+        margin: 20% auto; 
         padding: 15px;
     }
 
     .modal-content p {
-        font-size: 18px; /* Diminui a fonte do texto do modal */
+        font-size: 18px; 
     }
     
     .contato {
