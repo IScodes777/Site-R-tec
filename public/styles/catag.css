@@ -19,6 +19,16 @@ main {
     margin: 20px; 
 }
 
+/* Container para alinhar input e botão de busca */
+.busca-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
 /* Estilização para o campo de pesquisa dentro do main */
 main input[type="text"] {
     font-size: 20px;
@@ -28,24 +38,34 @@ main input[type="text"] {
     color: #ffffff;
     max-width: 400px;
     border-radius: 25px;
-    margin-top: 15px;
     outline: none;
     border: 2px solid #9e1a08;
+    box-sizing: border-box;
+}
+
+#botao-buscar {
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #9e1a08;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
 }
 
 .categorias {
-    padding: 20px; /* Reduzido de 60px para não empurrar os produtos muito para baixo */
+    padding: 20px; 
     display: flex;
     justify-content: center;
     flex-wrap: wrap; 
     gap: 15px;
-    font-size: 18px; /* Tamanho de fonte mais adequado para botões */
+    font-size: 18px; 
     margin: 20px 0; 
 }
 
 .categorias button {
     color: #ffffff;
-    border: 2px solid #9e1a08; /* Removida a transparência do vermelho para destacar o contorno */
+    border: 2px solid #9e1a08; 
     text-decoration: none;
     padding: 12px 24px; 
     background-color: #1a1a1a; 
@@ -74,7 +94,8 @@ main input[type="text"] {
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 20px; /* Adicionado padding lateral para os cards não colarem na tela do celular */
+    box-sizing: border-box;
 }
 
 .column.card {
@@ -82,7 +103,7 @@ main input[type="text"] {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-    border: 1px solid #e2e8f0 !important; /* Sobrescreve o inline antigo */
+    border: 1px solid #e2e8f0 !important; 
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
@@ -101,7 +122,6 @@ main input[type="text"] {
     height: 200px !important;
     object-fit: cover;
     margin-bottom: 12px;
-    justify-content: center;
 }
 
 /* Conteúdo de Texto do Card */
@@ -126,25 +146,28 @@ main input[type="text"] {
 }
 
 .modal {
-    display: none; /* escondido por padrão */
+    display: none; 
     position: fixed;
     z-index: 100;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(15, 23, 42, 0.6); /* Backdrop moderno fosco */
-    backdrop-filter: blur(4px); /* Suave desfoque ao fundo */
+    background-color: rgba(15, 23, 42, 0.6); 
+    backdrop-filter: blur(4px); 
+    overflow-y: auto; /* Permite rolar o modal caso o conteúdo seja grande no celular */
 }
 
 .modal-content {
     background: #fff;
     margin: 10% auto;
     padding: 20px;
-    width: 80%;
+    width: 85%;
     max-width: 500px;
     border-radius: 8px;
     font-family: roboto, sans-serif;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .modal-preco{
@@ -157,24 +180,24 @@ main input[type="text"] {
 }
 
 .close {
-  float: right;
-  font-size: 28px;
-  justify-content: center;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  background-color:  #9e1a08;
-  color: #ffffff;
-  border-radius: 46%;
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 28px; /* Alinha o X verticalmente */
+    background-color:  #9e1a08;
+    color: #ffffff;
+    border-radius: 50%;
+    text-align: center;
 }
 
 .contato {
     margin-top: 20px;
-    font-size: 26px;
+    font-size: 22px;
     padding: 10px;
     border-radius: 5px;
-    justify-content: left 20px;
-    cursor: pointer;
+    text-align: center;
 }
 
 .contato a {
@@ -188,13 +211,62 @@ main input[type="text"] {
     color: #28a2f3;
 }
 
-#botao-buscar {
-    font-size: 20px;
-    padding: 10px 20px;
-    background-color: #9e1a08;
-    color: #ffffff;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    margin-left: 10px; 
+/* ==========================================================
+   REGRAS PARA CELULARES E TELAS PEQUENAS (MÁXIMO 600PX)
+   ========================================================== */
+@media (max-width: 600px) {
+    main {
+        padding: 30px 15px; /* Reduz o padding gigante para caber na tela */
+        margin: 10px;
+        font-size: 18px; /* Diminui o texto do título principal */
+    }
+
+    main input[type="text"] {
+        width: 100%; /* Input ocupa largura total disponível */
+        font-size: 16px;
+        max-width: none;
+    }
+
+    #botao-buscar {
+        width: 100%; /* Botão fica embaixo do input e também ocupa largura total */
+        font-size: 16px;
+    }
+
+    .categorias {
+        gap: 8px; /* Diminui o espaçamento entre botões de categoria */
+        padding: 10px;
+    }
+
+    .categorias button {
+        padding: 10px 16px; /* Botões ligeiramente menores para o dedo tocar */
+        font-size: 15px;
+        flex-grow: 1; /* Faz os botões se ajustarem melhor na largura */
+    }
+
+    .row {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Permite 2 cards por linha em telas muito pequenas, se couber */
+        gap: 12px;
+        padding: 0 10px;
+    }
+
+    .column.card {
+        padding: 10px;
+    }
+
+    .column.card img {
+        height: 150px !important; /* Imagens um pouco menores nos cards */
+    }
+
+    .modal-content {
+        margin: 20% auto; /* Centraliza melhor o modal na tela do celular */
+        padding: 15px;
+    }
+
+    .modal-content p {
+        font-size: 18px; /* Diminui a fonte do texto do modal */
+    }
+    
+    .contato {
+        font-size: 18px;
+    }
 }

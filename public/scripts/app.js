@@ -9,7 +9,6 @@ let fotosDoProdutoAtual = [];
 let indiceFotoAtiva = 0;
 
 // --- FUNÇÃO AUXILIAR: TRATAMENTO SEGURO DO ARRAY DE FOTOS ---
-// Garante que o retorno seja sempre um Array de URLs, independente de como está no banco
 function extrairFotos(fotoDado) {
     if (Array.isArray(fotoDado)) {
         return fotoDado;
@@ -37,15 +36,15 @@ function renderizarProdutosNaTela(listaProdutos) {
         return;
     }
 
-    // 1. Gera o HTML de todos os cards
+    // 1. Gera o HTML de todos os cards (Removido estilos inline conflitantes com o CSS)
     listaProdutos.forEach((produto, index) => {
         const arrayFotos = extrairFotos(produto.foto);
         const fotoPrincipal = arrayFotos[0] || 'https://via.placeholder.com/150'; 
         const precoFormatado = produto.preco ? parseFloat(produto.preco).toFixed(2) : '0.00';
 
         const cardHTML = `
-            <div class="column card" data-index="${index}" style="cursor:pointer; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                <img src="${fotoPrincipal}" alt="${produto.nome}" style="width:100%; max-height: 200px; object-fit: cover;">
+            <div class="column card" data-index="${index}" style="cursor:pointer;">
+                <img src="${fotoPrincipal}" alt="${produto.nome}">
                 <h2>${produto.nome}</h2>
                 <p><strong>Cor:</strong> ${produto.cor || 'N/A'}</p>
                 <p><strong>Marca:</strong> ${produto.marca || 'N/A'}</p>
@@ -55,13 +54,12 @@ function renderizarProdutosNaTela(listaProdutos) {
         container.innerHTML += cardHTML;
     });
 
-    // 2. Adiciona o evento de clique nos cards para abrir o Modal com o CARROSSEL de fotos
+    // 2. Adiciona o evento de clique nos cards (Suporta toques mobile perfeitamente)
     document.querySelectorAll('#container-produtos .card').forEach((card) => {
         card.addEventListener('click', () => {
             const index = card.getAttribute('data-index');
             const produto = listaProdutos[index];
             
-            // Salva as fotos globalmente e zera o índice do slide para a primeira foto
             fotosDoProdutoAtual = extrairFotos(produto.foto);
             indiceFotoAtiva = 0;
 
@@ -76,7 +74,9 @@ function renderizarProdutosNaTela(listaProdutos) {
             document.getElementById('modal-preco').textContent = `R$ ${precoFormatado}`;
             document.getElementById('modal').style.display = 'block';
 
-            // Chama a função interna para desenhar o carrossel com as setas
+            // Garante que o modal abra no topo da tela (importante para mobile)
+            document.getElementById('modal').scrollTop = 0;
+
             atualizarCarrosselModal();
         });
     });
@@ -87,9 +87,8 @@ function atualizarCarrosselModal() {
     const fotosContainer = document.getElementById('modal-fotos-container');
     if (!fotosContainer) return;
 
-    fotosContainer.innerHTML = ''; // Limpa o container para recriar o slide
+    fotosContainer.innerHTML = ''; 
     
-    // Deixa o container alto o suficiente para caber a imagem confortavelmente
     fotosContainer.style.flexDirection = 'column';
     fotosContainer.style.justifyContent = 'center';
     fotosContainer.style.minHeight = '250px';
@@ -99,52 +98,49 @@ function atualizarCarrosselModal() {
         return;
     }
 
-    // Cria a linha que segura a Seta Esquerda -> Imagem -> Seta Direita
     const linhaSlide = document.createElement('div');
     linhaSlide.style.cssText = "display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px;";
 
-    // 1. Seta Esquerda (Anterior)
+    // 1. Seta Esquerda (Aumentada para facilidade de toque no celular: 44px)
     const btnAnterior = document.createElement('button');
-    btnAnterior.innerHTML = '&#10094;'; // Caractere ❮
+    btnAnterior.innerHTML = '&#10094;'; 
     btnAnterior.type = 'button';
-    btnAnterior.style.cssText = "background: #e2e8f0; border: none; color: #334155; font-size: 20px; font-weight: bold; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;";
-    // Se for a primeira foto, esconde a seta esquerda
+    btnAnterior.style.cssText = "background: #e2e8f0; border: none; color: #334155; font-size: 22px; font-weight: bold; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0; -webkit-tap-highlight-color: transparent;";
     btnAnterior.style.visibility = (indiceFotoAtiva > 0) ? 'visible' : 'hidden';
-    btnAnterior.onclick = () => {
+    btnAnterior.onclick = (e) => {
+        e.stopPropagation(); // Evita bugs de clique duplo em mobile
         indiceFotoAtiva--;
         atualizarCarrosselModal();
     };
 
-    // 2. Imagem do Slide Atual
+    // 2. Imagem do Slide Atual (Largura adaptável para telas menores)
     const imgSlide = document.createElement('img');
     imgSlide.src = fotosDoProdutoAtual[indiceFotoAtiva];
-    imgSlide.style.cssText = "width: 100%; max-width: 200px; height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;justify-content: center; display: block; margin: 0 auto;";
+    imgSlide.style.cssText = "width: 100%; max-width: 220px; height: 220px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; display: block; margin: 0 auto;";
 
-    // 3. Seta Direita (Próxima)
+    // 3. Seta Direita (Aumentada para 44px)
     const btnProxima = document.createElement('button');
-    btnProxima.innerHTML = '&#10095;'; // Caractere ❯
+    btnProxima.innerHTML = '&#10095;'; 
     btnProxima.type = 'button';
-    btnProxima.style.cssText = "background: #e2e8f0; border: none; color: #334155; font-size: 20px; font-weight: bold; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;";
-    // Se for a última foto, esconde a seta direita
+    btnProxima.style.cssText = "background: #e2e8f0; border: none; color: #334155; font-size: 22px; font-weight: bold; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0; -webkit-tap-highlight-color: transparent;";
     btnProxima.style.visibility = (indiceFotoAtiva < fotosDoProdutoAtual.length - 1) ? 'visible' : 'hidden';
-    btnProxima.onclick = () => {
+    btnProxima.onclick = (e) => {
+        e.stopPropagation();
         indiceFotoAtiva++;
         atualizarCarrosselModal();
     };
 
-    // 4. Legenda indicadora embaixo (Ex: 2 de 4)
+    // 4. Legenda indicadora
     const indicadorPagina = document.createElement('span');
     indicadorPagina.innerText = `${indiceFotoAtiva + 1} de ${fotosDoProdutoAtual.length}`;
-    indicadorPagina.style.cssText = "font-size: 13px; font-weight: bold; color: #64748b; margin-top: 8px; font-family: sans-serif;";
+    indicadorPagina.style.cssText = "font-size: 14px; font-weight: bold; color: #64748b; margin-top: 10px; font-family: sans-serif;";
 
-    // Se só tiver uma única foto cadastrada, as setas e a legenda não precisam poluir a tela
     if (fotosDoProdutoAtual.length === 1) {
         btnAnterior.style.display = 'none';
         btnProxima.style.display = 'none';
         indicadorPagina.style.display = 'none';
     }
 
-    // Monta a estrutura dentro do HTML
     linhaSlide.appendChild(btnAnterior);
     linhaSlide.appendChild(imgSlide);
     linhaSlide.appendChild(btnProxima);
@@ -153,59 +149,37 @@ function atualizarCarrosselModal() {
     fotosContainer.appendChild(indicadorPagina);
 }
 
-// --- FUNÇÃO: CARREGAR TODOS OS PRODUTOS ---
+// --- FUNÇÕES DE BUSCA (SUPABASE) ---
 async function carregarProdutos() {
-    const { data: listaProdutos, error } = await supabaseClient
-        .from('produtos')
-        .select('*');
-
-    if (error) {
-        console.error('Erro ao buscar dados do Supabase:', error.message);
-        return;
-    }
-
+    const { data: listaProdutos, error } = await supabaseClient.from('produtos').select('*');
+    if (error) { console.error(error.message); return; }
     renderizarProdutosNaTela(listaProdutos);
 }
 
-// --- FUNÇÃO: BUSCAR POR NOME ---
 async function buscarProdutosPorNome(nome) {
-    const { data: listaProdutos, error } = await supabaseClient
-        .from('produtos')
-        .select('*')
-        .ilike('nome', `%${nome}%`);
-
-    if (error) {
-        console.error('Erro ao buscar dados do Supabase:', error.message);
-        return;
-    }
-
+    const { data: listaProdutos, error } = await supabaseClient.from('produtos').select('*').ilike('nome', `%${nome}%`);
+    if (error) { console.error(error.message); return; }
     renderizarProdutosNaTela(listaProdutos);
 }
 
-// --- FUNÇÃO: BUSCAR POR CATEGORIA ---
 async function buscarProdutosPorCategoria(categoria) {
-    if (categoria === 'Ver todos') {
-        carregarProdutos();
-        return;
-    }
-    const { data: listaProdutos, error } = await supabaseClient
-        .from('produtos')
-        .select('*')
-        .eq('categoria', categoria);
-
-    if (error) {
-        console.error('Erro ao buscar dados do Supabase:', error.message);
-        return;
-    }
-
+    if (categoria === 'Ver todos') { carregarProdutos(); return; }
+    const { data: listaProdutos, error } = await supabaseClient.from('produtos').select('*').eq('categoria', categoria);
+    if (error) { console.error(error.message); return; }
     renderizarProdutosNaTela(listaProdutos);
 }
 
 // --- EVENTOS DE INTERAÇÃO (LISTENERS) ---
 
-// Fechar modal
+// Fechar modal ao clicar no botão ou fora do conteúdo (Ótimo para Mobile UX)
 document.getElementById('fechar').onclick = () => {
     document.getElementById('modal').style.display = 'none';
+};
+window.onclick = (event) => {
+    const modal = document.getElementById('modal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
 };
 
 // Botão de busca por nome
@@ -215,6 +189,13 @@ document.getElementById('botao-buscar').addEventListener('click', () => {
         buscarProdutosPorNome(nomeProduto);
     } else {
         carregarProdutos();
+    }
+});
+
+// Suporte para buscar ao apertar "Enter" no teclado do celular
+document.getElementById('pesquisa').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        document.getElementById('botao-buscar').click();
     }
 });
 
@@ -229,5 +210,4 @@ document.querySelectorAll('.categorias button').forEach(button => {
     });
 });
 
-// Inicialização automática ao carregar a página
 window.addEventListener('DOMContentLoaded', carregarProdutos);
