@@ -97,10 +97,11 @@ main input[type="text"] {
 /* Imagem do Card de Produto */
 .column.card img {
     border-radius: 6px;
-    width: 100% !important;
+    width: 100% ;
     height: 200px !important;
     object-fit: cover;
     margin-bottom: 12px;
+    justify-content: center;
 }
 
 /* Conteúdo de Texto do Card */

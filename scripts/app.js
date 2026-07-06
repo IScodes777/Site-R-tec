@@ -118,7 +118,7 @@ function atualizarCarrosselModal() {
     // 2. Imagem do Slide Atual
     const imgSlide = document.createElement('img');
     imgSlide.src = fotosDoProdutoAtual[indiceFotoAtiva];
-    imgSlide.style.cssText = "width: 100%; max-width: 200px; height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;";
+    imgSlide.style.cssText = "width: 100%; max-width: 200px; height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;justify-content: center; display: block; margin: 0 auto;";
 
     // 3. Seta Direita (Próxima)
     const btnProxima = document.createElement('button');
