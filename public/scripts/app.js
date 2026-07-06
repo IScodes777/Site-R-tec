@@ -55,6 +55,7 @@ function renderizarProdutosNaTela(listaProdutos) {
     });
 
     // 2. Adiciona o evento de clique nos cards (Suporta toques mobile perfeitamente)
+    // 2. Adiciona o evento de clique nos cards
     document.querySelectorAll('#container-produtos .card').forEach((card) => {
         card.addEventListener('click', () => {
             const index = card.getAttribute('data-index');
@@ -72,9 +73,19 @@ function renderizarProdutosNaTela(listaProdutos) {
             document.getElementById('modal-marca').textContent = produto.marca || '';
             document.getElementById('modal-tipo').textContent = produto.tipo || '';
             document.getElementById('modal-preco').textContent = `R$ ${precoFormatado}`;
+            
+            // ==================== NOVO BLOCO DO WHATSAPP ====================
+            const linkWhats = document.getElementById('btn-whatsapp');
+            if (linkWhats) {
+                // Codifica o nome do produto para evitar problemas com espaços ou acentos na URL
+                const mensagem = encodeURIComponent(`Olá R-tec, gostaria de saber mais sobre o produto: ${produto.nome}`);
+                linkWhats.href = `https://wa.me/558994039358?text=${mensagem}`;
+            }
+            // ================================================================
+
             document.getElementById('modal').style.display = 'block';
 
-            // Garante que o modal abra no topo da tela (importante para mobile)
+            // Garante que o modal abra no topo da tela
             document.getElementById('modal').scrollTop = 0;
 
             atualizarCarrosselModal();
