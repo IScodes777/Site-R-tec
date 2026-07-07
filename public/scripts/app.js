@@ -55,7 +55,6 @@ function renderizarProdutosNaTela(listaProdutos) {
     });
 
     // 2. Adiciona o evento de clique nos cards (Suporta toques mobile perfeitamente)
-    // 2. Adiciona o evento de clique nos cards
     document.querySelectorAll('#container-produtos .card').forEach((card) => {
         card.addEventListener('click', () => {
             const index = card.getAttribute('data-index');
