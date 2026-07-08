@@ -32,7 +32,8 @@ main {
 }
 
 .espaço {
-    height: 80px; /* Espaço entre a barra de busca e as categorias */
+    background-color: transparent; /* Apenas para manter o layout */
+    height: 900px; /* Espaço entre a barra de busca e as categorias */
 }
 
 main input[type="text"] {
