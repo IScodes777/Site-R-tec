@@ -9,7 +9,7 @@ body {
 
 main {
     padding: 60px;
-    background-image: url('/icons/capa.jpg');
+    background-image: url('/icons/fundo.png');
     background-size: cover;
     background-position: center;
     color: #ffffff; 
@@ -31,8 +31,8 @@ main {
     gap: 0;               /* Remove o espaço para eles se unirem elegantemente */
 }
 
-.espaco {
-    height: 8%; /* Espaço entre a barra de busca e as categorias */
+.espaço {
+    height: 80px; /* Espaço entre a barra de busca e as categorias */
 }
 
 main input[type="text"] {
