@@ -31,6 +31,10 @@ main {
     gap: 0;               /* Remove o espaço para eles se unirem elegantemente */
 }
 
+.espaco {
+    height: 20px; /* Espaço entre a barra de busca e as categorias */
+}
+
 main input[type="text"] {
     top: 30px;
     font-size: 16px;
