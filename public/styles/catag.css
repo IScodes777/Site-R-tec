@@ -10,7 +10,6 @@ body {
 main {
     padding: 60px;
     background-image: url('/icons/fundo.jpg');
-    background-size: cover;
     background-position: center;
     color: #ffffff; 
     border-radius: 10px;
@@ -31,13 +30,7 @@ main {
     gap: 0;               /* Remove o espaço para eles se unirem elegantemente */
 }
 
-.espaço {
-    background-color: blue; /* Apenas para manter o layout */
-    height: 900px; /* Espaço entre a barra de busca e as categorias */
-}
-
 main input[type="text"] {
-    top: 20%;
     font-size: 16px;
     padding: 12px 20px;
     background-color: #1a1a1a;
