@@ -32,7 +32,7 @@ main {
 }
 
 .espaco {
-    height: 20px; /* Espaço entre a barra de busca e as categorias */
+    height: 8%; /* Espaço entre a barra de busca e as categorias */
 }
 
 main input[type="text"] {
